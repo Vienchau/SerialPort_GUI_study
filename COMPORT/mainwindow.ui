@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>737</width>
-    <height>509</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>320</x>
       <y>50</y>
-      <width>401</width>
-      <height>331</height>
+      <width>261</width>
+      <height>421</height>
      </rect>
     </property>
    </widget>
@@ -29,8 +29,8 @@
      <rect>
       <x>310</x>
       <y>30</y>
-      <width>421</width>
-      <height>361</height>
+      <width>281</width>
+      <height>451</height>
      </rect>
     </property>
     <property name="title">
@@ -41,8 +41,8 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>370</y>
-      <width>231</width>
+      <y>380</y>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -51,7 +51,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>410</y>
+      <y>420</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -65,8 +65,8 @@
      <rect>
       <x>20</x>
       <y>350</y>
-      <width>251</width>
-      <height>101</height>
+      <width>261</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="title">
@@ -121,95 +121,204 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>31</x>
-      <y>41</y>
-      <width>231</width>
-      <height>161</height>
+      <x>600</x>
+      <y>370</y>
+      <width>131</width>
+      <height>111</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>COM</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="serialComboBox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>BaudRate</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="baudComboBox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Data Size</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="sizeComboBox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Parity</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="parityComboBox"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../../../tai_lieu/logo/Logo BK.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QPushButton" name="openButton">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>50</x>
       <y>220</y>
       <width>201</width>
-      <height>31</height>
+      <height>61</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Open</string>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QPushButton" name="openButton">
+       <property name="text">
+        <string>Open</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>40</y>
+      <width>111</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>PC13 Mode</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>91</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QRadioButton" name="toogleRadio">
+        <property name="text">
+         <string>Toogle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="setRadio">
+        <property name="text">
+         <string>SET</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="resetRadio">
+        <property name="text">
+         <string>RESET</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="confirmButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Confirm</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>261</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Serial Port</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>231</width>
+       <height>200</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>COM</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="serialComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>BaudRate</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="baudComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Data Size</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="sizeComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Parity</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="parityComboBox"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <zorder>layoutWidget</zorder>
    <zorder>groupBox</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>textBrowser</zorder>
    <zorder>lineEdit</zorder>
    <zorder>sendButton</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>openButton</zorder>
+   <zorder>label_2</zorder>
+   <zorder>groupBox_3</zorder>
+   <zorder>groupBox_4</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -217,7 +326,7 @@
      <x>0</x>
      <y>0</y>
      <width>737</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

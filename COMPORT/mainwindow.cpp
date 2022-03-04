@@ -4,27 +4,11 @@
 #include <QSerialPortInfo>
 #include <QTimer>
 #include <QScrollBar>
+#include <QIODevice>
+#include <QThread>
 
-
-uint8_t bSTX[] = {0x02};
-
-uint8_t bMOVL[] = {0x4D, 0x4F, 0x56, 0x4C};
-uint8_t bGPOS[] = {0x47, 0x50, 0x4F, 0x53};
-uint8_t bGVEL[] = {0x47, 0x56, 0x45, 0x4C};
-uint8_t bSTT[] = {0x47, 0x53, 0x54, 0x54};
-
-uint8_t bOPT[] ={0x00, 0x00, 0x00};
-uint8_t bDATA[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01};
-
-uint8_t bSYNC[] ={0x16};
-uint8_t bACK[] ={0x06};
-
-uint8_t bEXT[] = {0x03};
-
-uint8_t bProtocolDataBuffer[18] = {};
-uint8_t bProtocolData[8] ={};
-
-
+    uint8_t index = 0;
+    //QString str;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -47,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sizeComboBox->addItem(QStringLiteral("8"), QSerialPort::Data8);
 
 
+
     QStringList parity = {"none"};
     ui -> parityComboBox -> addItems(parity);
 
@@ -55,11 +40,18 @@ MainWindow::MainWindow(QWidget *parent)
     mSerialScanTimer->setInterval(5000);
     mSerialScanTimer->start();
 
+    ui-> sttButton -> setEnabled(false);
+    ui-> velButton -> setEnabled(false);
+    ui-> posButton -> setEnabled(false);
+    ui-> movButton -> setEnabled(false);
+
+
     connect(mSerialScanTimer, &QTimer::timeout, this, &MainWindow::updateSerialPort);
     connect(ui->lineEdit, &QLineEdit::returnPressed,this, &MainWindow::on_sendButton_clicked);
     connect(mSerial, &QSerialPort::readyRead, this, &MainWindow::serialport_read);
-}
 
+
+}
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -114,17 +106,10 @@ void MainWindow::updateSerialPort()
 
 }
 
-
-
 void MainWindow::on_openButton_clicked()
 {
     ui->openButton->setEnabled(false);
     QString serialLoc  =  ui->serialComboBox->currentData().toString();
-    if (mSerial->isOpen()) {
-        QString text = "Serial already connected, disconnecting!\n";
-        ui->textBrowser->insertPlainText(text);
-        mSerial->close();
-    }
 
     mSerial->setPortName(serialLoc);
     mSerial->setBaudRate(static_cast<QSerialPort::BaudRate>(ui->baudComboBox->itemData(ui->baudComboBox->currentIndex()).toInt()));
@@ -142,8 +127,11 @@ void MainWindow::on_openButton_clicked()
         QString text = "SERIAL: ERROR!\n";
         ui->textBrowser->insertPlainText(text);
     }
-
-   ui->openButton->setEnabled(true);
+    ui-> sttButton -> setEnabled(true);
+    ui-> velButton -> setEnabled(true);
+    ui-> posButton -> setEnabled(true);
+    ui-> movButton -> setEnabled(true);
+    ui-> openButton ->setEnabled(true);
 }
 
 
@@ -165,9 +153,100 @@ void MainWindow::on_sendButton_clicked()
 
 void MainWindow::serialport_read()
 {
+    QString str;
+    QString cmd = "Command recieved: ";
+    QString data = "Data recieved: ";
+    QThread::msleep(50);
     QByteArray data_rev = mSerial -> readAll();
-    QString str = QString(data_rev);
-    ui -> textBrowser -> insertPlainText(str);
+    if(data_rev.size() < 17)
+    {
+        data_rev.clear();
+    }
+    else
+    {
+        str = (QString(data_rev));
+            QString temp = str;
+            //command split
+            temp.chop(13);
+            ui -> textBrowser -> insertPlainText(cmd);
+            temp.append("\n");
+            ui -> textBrowser -> insertPlainText(temp);
+             //data split
+            //QString temp2 = QString::number(data_rev, 16);
+
+            QString temp2 = str;
+            temp2.chop(2);
+            temp2 = temp2.right(9);
+            ui -> textBrowser -> insertPlainText(data);
+            temp2.append("\n");
+            ui -> textBrowser -> insertPlainText(temp2);
+            //clear data remain
+            str.clear();
+            temp.clear();
+            data_rev.clear();
+    }
     QScrollBar *sb = ui->textBrowser->verticalScrollBar();
     sb->setValue(sb->maximum());
 }
+
+void MainWindow::dataProcessing()
+{
+    //QTimer::singleShot(100,this,[=]{serialport_read();});
+}
+
+void MainWindow::on_confirmButton_clicked()
+{
+    if(ui -> resetRadio -> isChecked())
+    {
+        QByteArray str("02 01 01 01 01 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray t = str.replace(" ", "");
+        QByteArray bytes = QByteArray::fromHex(t);
+        mSerial->write(bytes);
+        if(mSerial -> isWritable())
+        {
+            QString text = "Command sent: Reset PC13\r\n";
+            ui -> textBrowser -> insertPlainText(text);
+        }
+    }
+    else if(ui -> setRadio -> isChecked())
+    {
+        QByteArray str("02 02 02 02 02 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray t = str.replace(" ", "");
+        QByteArray bytes = QByteArray::fromHex(t);
+        mSerial->write(bytes);
+        if(mSerial -> isWritable())
+        {
+            QString text = "Command sent: Set PC13\r\n";
+            ui -> textBrowser -> insertPlainText(text);
+        }
+    }
+    else if(ui -> toogleRadio -> isChecked())
+    {
+        QByteArray str("02 03 03 03 03 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray t = str.replace(" ", "");
+        QByteArray bytes = QByteArray::fromHex(t);
+        mSerial->write(bytes);
+        if(mSerial -> isWritable())
+        {
+            QString text = "Command sent: Toogle PC13\r\n";
+            ui -> textBrowser -> insertPlainText(text);
+        }
+    }
+}
+
+
+void MainWindow::on_closeButton_clicked()
+{
+    if (mSerial->isOpen())
+    {
+        mSerial->close();
+        QString text = "Serial Port: Close\n";
+        ui->textBrowser->insertPlainText(text);
+        ui-> sttButton -> setEnabled(false);
+        ui-> velButton -> setEnabled(false);
+        ui-> posButton -> setEnabled(false);
+        ui-> movButton -> setEnabled(false);
+    }
+
+}
+

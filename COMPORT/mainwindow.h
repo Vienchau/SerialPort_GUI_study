@@ -27,6 +27,10 @@ private slots:
     void on_openButton_clicked();
     void on_sendButton_clicked();
     void serialport_read();
+    void dataProcessing();
+    void on_confirmButton_clicked();
+
+    void on_closeButton_clicked();
 
 private:
     void updateSerialPort();
