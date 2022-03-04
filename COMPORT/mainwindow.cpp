@@ -198,7 +198,7 @@ void MainWindow::on_confirmButton_clicked()
 {
     if(ui -> resetRadio -> isChecked())
     {
-        QByteArray str("02 01 01 01 01 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray str("02 52 45 53 53 00 00 00 00 00 00 00 00 01 00 01 16 03");
         QByteArray t = str.replace(" ", "");
         QByteArray bytes = QByteArray::fromHex(t);
         mSerial->write(bytes);
@@ -210,7 +210,7 @@ void MainWindow::on_confirmButton_clicked()
     }
     else if(ui -> setRadio -> isChecked())
     {
-        QByteArray str("02 02 02 02 02 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray str("02 53 45 54 54 00 00 00 00 00 00 00 00 01 00 01 16 03");
         QByteArray t = str.replace(" ", "");
         QByteArray bytes = QByteArray::fromHex(t);
         mSerial->write(bytes);
@@ -222,7 +222,7 @@ void MainWindow::on_confirmButton_clicked()
     }
     else if(ui -> toogleRadio -> isChecked())
     {
-        QByteArray str("02 03 03 03 03 00 00 00 00 00 00 00 00 01 00 01 16 03");
+        QByteArray str("02 54 4F 47 47 00 00 00 00 00 00 00 00 01 00 01 16 03");
         QByteArray t = str.replace(" ", "");
         QByteArray bytes = QByteArray::fromHex(t);
         mSerial->write(bytes);
